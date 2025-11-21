@@ -1,4 +1,4 @@
-package com.example.bookbackend.controller;
+package com.example.book-backend.controller;
 
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
