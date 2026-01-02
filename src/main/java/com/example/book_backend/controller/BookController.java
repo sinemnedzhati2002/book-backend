@@ -1,35 +1,21 @@
-/**package com.example.book_backend.controller;
-
-import org.springframework.web.bind.annotation.*;
-import java.util.List;
-
-@RestController
-@RequestMapping("/api")
-@CrossOrigin(origins = "*") // später durch deine Frontend-URL ersetzen
-public class BookController {
-
-    @GetMapping("/books")
-    public List<String> getBooks() {
-        return List.of(
-                "Harry Potter",
-                "Der Herr der Ringe",
-                "Der Hobbit"
-        );
-    }
-}*/
-
 
 package com.example.book_backend.controller;
 
-import com.example.book_backend.Book;
-import com.example.book_backend.BookService;
+import com.example.book_backend.entity.Book;
+import com.example.book_backend.entity.ReadingStatus;
+import com.example.book_backend.service.BookService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/books")
-@CrossOrigin(origins = "*")  // später durch deine Render-Frontend-URL ersetzen
+@CrossOrigin(origins = {
+        "http://localhost:5173",
+        "https://book-frontend-2-qbx4.onrender.com"
+})
 public class BookController {
 
     private final BookService service;
@@ -54,10 +40,21 @@ public class BookController {
         return service.getById(id);
     }
 
+    @GetMapping("/toread")
+    public List<Book> getToReadBooks() {
+        return service.getToRead();
+    }
+
+    @GetMapping("/finished")
+    public List<Book> getFinishedBooks() {
+        return service.getFinished();
+    }
+
     // POST /api/books
     @PostMapping
-    public Book createBook(@RequestBody Book book) {
-        return service.create(book);
+    public ResponseEntity<Book> createBook(@RequestBody Book book) {
+        Book created = service.create(book);
+        return ResponseEntity.created(URI.create("/api/books/" + created.getId())).body(created);
     }
 
     // PUT /api/books/{id}
@@ -66,9 +63,20 @@ public class BookController {
         return service.update(id, book);
     }
 
+    @GetMapping("/{id}/status")
+    public Book changeStatus(@PathVariable Long id, @RequestParam ReadingStatus status) {
+        return service.updateStatus(id, status);
+    }
+
     // DELETE /api/books/{id}
     @DeleteMapping("/{id}")
     public void deleteBook(@PathVariable Long id) {
         service.delete(id);
     }
+
+
+
+
+
+
 }

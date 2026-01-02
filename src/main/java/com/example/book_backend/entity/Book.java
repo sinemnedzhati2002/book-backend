@@ -1,9 +1,9 @@
-package com.example.book_backend;
+package com.example.book_backend.entity;
+import com.example.book_backend.entity.ReadingStatus;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,17 +21,26 @@ public class Book {
     private String title;
     private String author;
     private String genre;
-    private Integer rating;      // 1-5 Sterne
-    private LocalDate finishedOn;
+    private Integer rating;
+    private LocalDate plannedOn;   // geplant zu lesen
+    private LocalDate finishedOn; // fertig gelesen
+
+
+    @Enumerated(EnumType.STRING)
+    private ReadingStatus status = ReadingStatus.TO_READ;
 
     public Book() {}
 
-    public Book(String title, String author, String genre, Integer rating, LocalDate finishedOn) {
+    public Book(String title, String author, String genre,
+                Integer rating, LocalDate plannedOn,
+                LocalDate finishedOn, ReadingStatus status) {
         this.title = title;
         this.author = author;
         this.genre = genre;
         this.rating = rating;
+        this.plannedOn = plannedOn;
         this.finishedOn = finishedOn;
+        this.status = status;
     }
 
     @Override
@@ -41,7 +50,8 @@ public class Book {
                 ", title='" + title + '\'' +
                 ", author='" + author + '\'' +
                 ", genre='" + genre + '\'' +
-                ", rating=" + rating +
+                ", status=" + status +
+                ", plannedOn=" + plannedOn +
                 ", finishedOn=" + finishedOn +
                 '}';
     }
