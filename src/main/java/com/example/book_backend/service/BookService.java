@@ -64,10 +64,23 @@ public class BookService {
         existing.setGenre(updated.getGenre());
         existing.setRating(updated.getRating());
         existing.setPlannedOn(updated.getPlannedOn());
+        //existing.setFinishedOn(updated.getFinishedOn());
         existing.setStatus(updated.getStatus());
 
+        if (updated.getStatus() == ReadingStatus.FINISHED) {
+            if (updated.getFinishedOn() != null) {
+                // Benutzer hat bewusst ein Datum gesetzt → übernehmen
+                existing.setFinishedOn(updated.getFinishedOn());
+            } else if (existing.getFinishedOn() == null) {
+                // Kein Datum vorhanden → heute setzen
+                existing.setFinishedOn(LocalDate.now());
+            }
+        } else {
+            // Nicht FINISHED → finishedOn muss null sein
+            existing.setFinishedOn(null);
+        }
 
-        normalizeDates(existing);
+       // normalizeDates(existing);
         return repo.save(existing);
     }
 

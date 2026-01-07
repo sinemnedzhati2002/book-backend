@@ -23,7 +23,7 @@ public class Book {
     private String genre;
     private Integer rating;
     private LocalDate plannedOn;   // geplant zu lesen
-    private LocalDate finishedOn; // fertig gelesen
+    public LocalDate finishedOn; // fertig gelesen
 
 
     @Enumerated(EnumType.STRING)
