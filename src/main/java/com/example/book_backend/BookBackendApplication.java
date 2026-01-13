@@ -130,7 +130,7 @@ public class BookBackendApplication {
                         "Romance",
                         null,                             // rating noch leer
                         null,                             // finishedOn
-                        LocalDate.of(2025, 1, 10),        // plannedOn
+                        LocalDate.now(),        // plannedOn
                         ReadingStatus.TO_READ
                 ));
 
