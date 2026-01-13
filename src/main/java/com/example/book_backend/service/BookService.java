@@ -67,6 +67,10 @@ public class BookService {
         //existing.setFinishedOn(updated.getFinishedOn());
         existing.setStatus(updated.getStatus());
 
+        if (existing.getStatus() == null) {
+            existing.setStatus(ReadingStatus.TO_READ);
+        }
+
         if (updated.getStatus() == ReadingStatus.FINISHED) {
             if (updated.getFinishedOn() != null) {
                 // Benutzer hat bewusst ein Datum gesetzt → übernehmen
@@ -80,7 +84,7 @@ public class BookService {
             existing.setFinishedOn(null);
         }
 
-       // normalizeDates(existing);
+        normalizeDates(existing);
         return repo.save(existing);
     }
 
