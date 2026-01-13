@@ -64,9 +64,11 @@ public class BookController {
     }
 
     @GetMapping("/{id}/status")
-    public Book changeStatus(@PathVariable Long id, @RequestParam ReadingStatus status) {
-        return service.updateStatus(id, status);
+    public Book changeStatus(@PathVariable Long id, @RequestBody StatusUpdateRequest req) {
+        return service.updateStatus(id, req.status());
     }
+
+    public record StatusUpdateRequest(ReadingStatus status) {}
 
     // DELETE /api/books/{id}
     @DeleteMapping("/{id}")
