@@ -12,10 +12,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/books")
-@CrossOrigin(origins = {
+/**@CrossOrigin(origins = {
         "http://localhost:5173",
         "https://book-frontend-2-qbx4.onrender.com"
-})
+})*/
 public class BookController {
 
     private final BookService service;
