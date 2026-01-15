@@ -72,7 +72,7 @@ public class BookController {
         return service.update(id, book);
     }
 
-    @GetMapping("/{id}/status")
+    @PatchMapping("/{id}/status")
     public Book changeStatus(@PathVariable Long id, @RequestBody StatusUpdateRequest req) {
         return service.updateStatus(id, req.status());
     }
