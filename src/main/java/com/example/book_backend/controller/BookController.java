@@ -6,7 +6,7 @@ import com.example.book_backend.entity.ReadingStatus;
 import com.example.book_backend.service.BookService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.bind.annotation.RequestMethod;
 import java.net.URI;
 import java.util.List;
 
@@ -16,6 +16,15 @@ import java.util.List;
         "http://localhost:5173",
         "https://book-frontend-2-qbx4.onrender.com"
 })*/
+@CrossOrigin(
+        origins = {
+                "http://localhost:5173",
+                "https://book-frontend-2-qbx4.onrender.com"
+        },
+        allowedHeaders = "*",
+        methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.PATCH, RequestMethod.DELETE, RequestMethod.OPTIONS}
+)
+
 public class BookController {
 
     private final BookService service;
